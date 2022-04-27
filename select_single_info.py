@@ -1,24 +1,26 @@
-def select_single_info():
+from mysql import connector
+from random import randint
 
-    from mysql import connector
-    from random import randint
-
+def connection(db_name):
     mydb = connector.connect(
         host = "localhost",
         user = "root",
         password = "",
-        database = "testecombinacao"
+        database = f"{db_name}"
     )
 
+    return mydb
+
+def select_single_info(db_name, table_name, id):
+    mydb = connection(db_name)    
     mycursor = mydb.cursor()
 
-    id_number = randint(1, 4)
-    mycursor.execute(f"SELECT * FROM numeros WHERE id='{id_number}'")
+    mycursor.execute(f"SELECT * FROM {table_name} WHERE id='{id}'")
 
     myresult = mycursor.fetchall()
 
     for id, combination, sum_ in myresult:
-        return(f"ID: {id} - Combination: {combination} - Sum {sum_}")
+        print(f"ID: {id} - Combination: {combination} - Sum {sum_}")
 
 if __name__ == "__main__":
-    print(select_single_info())
+    select_single_info("testecombinacao", "numeros", randint(1,4))

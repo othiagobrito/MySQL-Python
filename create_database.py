@@ -10,16 +10,12 @@ def connection(db_name):
 
     return mydb
 
-def select_info(db_name, table_name):
+def create_db(db_name):
     mydb = connection(db_name)    
     mycursor = mydb.cursor()
 
-    mycursor.execute(f"SELECT * FROM {table_name}")
-
-    myresult = mycursor.fetchall()
-
-    for id, combination, sum_ in myresult:
-        print(f"ID: {id} - Combination: {combination} - Sum {sum_}")
+    mycursor.execute(f"CREATE DATABASE {db_name}")
+    print(f"Database named '{db_name}' was successfully created!")
 
 if __name__ == "__main__":
-    select_info("testecombinacao", "numeros")
+    create_db("testecombinacao")
